@@ -25,9 +25,9 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 @pyrogram.Client.on_message(pyrogram.Filters.document | Filters.video)
 async def getchat(bot, update):
-    out = await bot.get_messages(chat_id=update.chat.id, message_ids=update.message_id)
-    print(out) 
+    media = update.document or update.video
+    name = media.file_name
     await bot.send_message(
-      text=Translation.USER_TXT.format(out.document.file_name, out.document.file_size, out.document.mime_type),
+      text=Translation.USER_TXT.format(name)
       chat_id=update.chat.id
     )
